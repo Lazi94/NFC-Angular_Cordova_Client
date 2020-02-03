@@ -1,0 +1,21 @@
+.map-container {
+    position: absolute;
+   height: 100%;
+  }
+  
+agm-map {
+    height: 100% !important;
+    position: relative;
+    width: 100%;
+    }
+  .row{
+    position: fixed!important;
+  
+    width: 100%;
+    height: 100%;
+    margin-right: 0px!important;
+    margin-left: 0px!important
+  }
+
+
+  /* style="height: 100%-250px; width: -webkit-calc(100% - 200px); position: absolute; top: 0px; left: 250px; background-color: rgb(229, 227, 223);" */

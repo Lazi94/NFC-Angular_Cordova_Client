@@ -1,0 +1,16 @@
+
+
+<div *ngIf="deviceData$ | async as deviceData; else loading">
+    <ng-container *ngIf="deviceData.length; else noItems">
+        <button (click)="test()">ASD</button>
+    </ng-container>
+    <ng-template #noItems>No Items!</ng-template>
+</div>
+   <ng-template #loading>loading animation...</ng-template>
+
+   <div *ngIf="asd"> show if photo is not empty</div>
+   <div *ngIf="!asd">
+
+    <ngx-spinner></ngx-spinner>
+   </div>
+   <div *ngFor="let data of items | async">{{ data | json }}</div>

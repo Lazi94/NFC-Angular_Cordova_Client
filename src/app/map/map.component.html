@@ -1,0 +1,15 @@
+<div class="container2">
+  <div class="row">
+      <agm-map #AgmMap [zoom]="location.zoom" [fitBounds]="true" [latitude]="location.latitude"  [longitude]="location.longitude" [disableDefaultUI]="false" [usePanning]="true"  [zoomControl]="false" > 
+
+          <agm-marker [style]='blue' [draggable]="true" [latitude]="data.latitude"  [longitude]="data.longitude" [label]="data.name" *ngFor="let data of deviceData">
+          <agm-info-window > <!-- [disableAutoPan]="false">-->
+              <strong>Dátum: </strong>{{ data.date }} <br>
+              <strong>Felhasználó: </strong>{{ data.user }} <br>
+              <strong>Mobil típusa: </strong>{{ data.mobileDevice }} <br>  
+          </agm-info-window>
+          </agm-marker>
+      
+  </agm-map>
+  </div>
+</div>

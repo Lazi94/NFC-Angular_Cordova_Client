@@ -1,0 +1,51 @@
+
+<div class="card">
+  <div class="card-body">
+  <form>
+    <div class="row">
+      <div class="form-row">
+        <div class="col">
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Válassz adat típust</button>
+          <div  ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <div *ngFor="let option of Options">
+            <button ngbDropdownItem  (click)="getItem(option)">{{ option }}</button>
+          </div>
+          <!--<button ngbDropdownItem>Szivattyú</button>-->
+          </div>
+        </div>
+
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" id="sorszam" value={{type}} readonly> 
+      </div>
+
+      <div class="col">
+        <input type="text" class="form-control" id="sorszam"  placeholder="Sorszám" [(ngModel)]="number" [ngModelOptions]="{standalone: true}"> 
+      </div>
+    </div>
+    </div>
+    <br>
+      <div class="form-group">
+          <label for="latitude">Szélességi fok</label>
+          <input type="text" class="form-control" id="latitude"  placeholder="Szélességi fok" [(ngModel)]="data.latitude" [ngModelOptions]="{standalone: true}"> 
+        </div>
+      <div class="form-group">
+          <label for="longitude">Hosszúsági fok</label>
+          <input type="text" class="form-control" id="longitude"  placeholder="Hosszúsági fok" [(ngModel)]="data.longitude" [ngModelOptions]="{standalone: true}"> 
+        </div>
+      <div class="form-group">
+        <label for="mobildevice">Mobil device name</label>
+        <input type="text" class="form-control" id="mobildevice"  placeholder="Mobile device name" [(ngModel)]="data.mobileDevice" [ngModelOptions]="{standalone: true}"> 
+      </div>
+      <div class="form-group">
+        <label for="user">Felhasználó</label>
+        <input type="text" class="form-control" id="user" placeholder="User email" [(ngModel)]="data.user" [ngModelOptions]="{standalone: true}">
+      </div>
+      <button type="submit" class="btn btn-primary" (click)="save()">Küldés</button>
+      <ngb-alert  *ngIf="success" [type]="'primary'" (close)="success = false" [dismissible]="true">
+        <strong>Adatok sikeresen elküldve!</strong> 
+      </ngb-alert>
+    </form>
+  </div>
+  </div>
