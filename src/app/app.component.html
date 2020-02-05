@@ -11,6 +11,9 @@
     <a   routerLink='/login' routerLinkActive="active">Bejelentkezés</a>
   </div>
   <div  *ngIf="aSfAuth.isLogged" routerLinkActive="active asd" [routerLinkActiveOptions]="{exact: true}">
+    <a   routerLink='/Users' routerLinkActive="active">Felhasználók</a>
+  </div>
+  <div  *ngIf="aSfAuth.isLogged" routerLinkActive="active asd" [routerLinkActiveOptions]="{exact: true}">
     <a   (click)="onLogut()">Kijelentkezés</a>
   </div>
 </div>

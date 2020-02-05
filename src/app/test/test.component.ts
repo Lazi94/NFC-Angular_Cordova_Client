@@ -29,7 +29,7 @@ export class TestComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.noteRef = this.db.doc('User/Alma');
+    /*this.noteRef = this.db.doc('User/Alma');
     this.noteRef.valueChanges();
     console.log(this.noteRef)
 
@@ -37,8 +37,11 @@ export class TestComponent implements OnInit {
     itemCollection.valueChanges().subscribe(data => console.log(data));
     console.log(this.items)
 
-   
-      
+
+      */
+      var itemCollection = this.db.collection('Users').doc("testes@tranzorg.hu");
+      itemCollection.valueChanges().subscribe(items => console.log(items));
+      //console.log(this.items)
     this.spinner.show();
   }
 

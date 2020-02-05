@@ -5,17 +5,17 @@
 export const environment = {
   production: false,
   Google : {
-    ApiKey : ''
+    ApiKey : 'AIzaSyAz9AKtQrXFFo--9O-sUNV_lRQdbkfOCBE'
   },  
   firebaseConfig : {
-    apiKey: "",
-    authDomain: "",
-    databaseURL: "",
-    projectId: "",
-    storageBucket: "",
-    messagingSenderId: "",
-    appId: "",
-    measurementId: ""
+    apiKey: "AIzaSyBdzTL1fWPY5W_jEwl52fYx6YcVU9FdYcU",
+    authDomain: "nfc-cordova.firebaseapp.com",
+    databaseURL: "https://nfc-cordova.firebaseio.com",
+    projectId: "nfc-cordova",
+    storageBucket: "nfc-cordova.appspot.com",
+    messagingSenderId: "601769598276",
+    appId: "1:601769598276:web:8ddf3cd6f9dd9c76058b11",
+    measurementId: "G-EH8JQZE5K8"
   }
 };
 

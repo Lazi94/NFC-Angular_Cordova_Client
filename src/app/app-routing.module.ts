@@ -5,12 +5,12 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './guard/auth.guard';
 import { MapComponent } from './map/map.component';
 import { AddDataComponent } from './add-data/add-data.component';
-import { AddUserComponent } from './add-user/add-user.component';
+import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
   { path: 'test',   component: TestComponent},
   { path: 'login', component: LoginComponent},
-  { path: 'addUser', component: AddUserComponent, canActivate: [AuthGuard] },
+  { path: 'Users', component: UsersComponent, canActivate: [AuthGuard] },
   { path: 'addData', component: AddDataComponent, canActivate: [AuthGuard] },
   { path: 'home', component: MapComponent, canActivate: [AuthGuard] },
   { path: '',  redirectTo: 'home', pathMatch: 'full', canActivate: [AuthGuard]}

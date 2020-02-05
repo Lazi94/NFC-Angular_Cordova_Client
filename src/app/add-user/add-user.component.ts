@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgDragDropModule } from 'ng-drag-drop';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import { User } from '../model/User.class';
+import { AuthService } from '../services/auth.service';
+import { FirestoreService } from '../services/firestore.service';
 
 @Component({
   selector: 'app-add-user',
@@ -11,77 +14,23 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag
 })
 export class AddUserComponent implements OnInit {
 
-  constructor() { }
+  user : User = new User();
+  success : any;
+  constructor(private AuthS : AuthService, private FS : FirestoreService) { }
 
   ngOnInit() {
   }
 
-  todos = [
-    {
-      name: 'Angular',
-      category: 'Web Development'
-    },
-    {
-      name: 'Flexbox',
-      category: 'Web Development'
-    },
-    {
-      name: 'iOS',
-      category: 'App Development'
-    },
-    {
-      name: 'Java',
-      category: 'Software development'
-    }
-  ];
+  async onRegister(){
 
-  completed = [
-    {
-      name: 'Android',
-      category: 'Mobile Development'
-    },
-    {
-      name: 'MongoDB',
-      category: 'Databases'
-    },
-    {
-      name: 'ARKit',
-      category: 'Augmented Reality'
-    },
-    {
-      name: 'React',
-      category: 'Web Development'
-    }
-  ];
+    try{
+      const user = await this.AuthS.onRegister(this.user);
+      const userData = await this.FS.addCollection(this.user);
+      this.success = true;
 
-  asd = [
-    {
-      name: 'Android',
-      category: 'Mobile Development'
-    },
-    {
-      name: 'MongoDB',
-      category: 'Databases'
-    },
-    {
-      name: 'ARKit',
-      category: 'Augmented Reality'
-    },
-    {
-      name: 'React',
-      category: 'Web Development'
-    }
-  ];
-
-  onDrop(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data,
-        event.previousIndex,
-        event.currentIndex);
-    } else {
-      transferArrayItem(event.previousContainer.data,
-        event.container.data,
-        event.previousIndex, event.currentIndex);
+    } catch{
+      this.success = false;
     }
   }
+ 
 }

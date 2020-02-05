@@ -15,7 +15,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireModule  } from '@angular/fire/';
 import { NgxSpinnerModule } from "ngx-spinner";
-import { MatTabsModule, MatSidenavModule, MatIconModule, MatCardModule, MatButtonModule, MatToolbarModule  } from '@angular/material';
+import { MatTabsModule, MatSidenavModule, MatIconModule, MatCardModule, MatButtonModule, MatToolbarModule, MatButtonToggleModule   } from '@angular/material';
 import { LoginComponent } from './login/login.component';
 import { MatInputModule } from '@angular/material/input';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -25,6 +25,8 @@ import { MapComponent } from './map/map.component';
 import { AddUserComponent } from './add-user/add-user.component';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { AddRoleComponent } from './add-role/add-role.component';
+import { UsersComponent } from './users/users.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     LoginComponent,
     AddDataComponent,
     AddUserComponent,
+    AddRoleComponent,
+    UsersComponent,
   ],
   imports: [
     FormsModule,
@@ -50,6 +54,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatTabsModule,
     MatSidenavModule,
     MatCardModule,
+    MatButtonToggleModule,
     BrowserAnimationsModule,
     MatIconModule,
     MatButtonModule,
@@ -60,7 +65,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
   ],
   exports:[
     MatTabsModule,
-    MatSidenavModule
+    MatSidenavModule,
+    AddRoleComponent
   ],
   providers: [MapComponent],
   bootstrap: [AppComponent]
