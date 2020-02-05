@@ -1,0 +1,13 @@
+<mat-button-toggle-group name="fontStyle" aria-label="Font Style" value="true">
+    <mat-button-toggle (click)="change(true)" value="true">Jogosultságok beállítása</mat-button-toggle>
+    <mat-button-toggle (click)="change(false)" value="false">Felhasználó hozzáadása</mat-button-toggle>
+  </mat-button-toggle-group>
+
+
+  <div class="lessons-list" *ngIf="Selector else loading">
+        <app-add-role></app-add-role>
+  </div>
+  
+  <ng-template #loading>
+        <app-add-user></app-add-user>
+  </ng-template>
