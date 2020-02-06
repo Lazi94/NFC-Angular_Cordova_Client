@@ -2,19 +2,25 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { User } from '../model/User.class';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirestoreService {
-
+  itemsCollection: AngularFirestoreCollection<any>;
   items: any;
+  user : User;
+
+  public ideasCollection: AngularFirestoreCollection<User>;
+  public ideas: Observable<any[]>;
 
   constructor(private AF: AngularFirestore) { }
 
   async addCollection(user : User){
     await this.AF.collection("Users").doc(user.email + "@tranzorg.hu").set({
-      role: "none"
+      role: "none",
+      name: user.email
   })
   .then(function() {
       console.log("Document successfully written!");
@@ -24,12 +30,10 @@ export class FirestoreService {
   });
   }
 
- async getRole2(user: User){
-   console.log(user.email)
-    var itemCollection = await this.AF.collection('Users').doc(user.email).get();
-    //var test=  itemCollection.valueChanges().subscribe(items =>console.log(items));
-    console.log(itemCollection)
-    return this.items;
+ 
+  async getCollectionData(){
+    const snapshot = await this.AF.collection('Users').valueChanges();
+    return snapshot;
   }
 
   async getRole(user: User){

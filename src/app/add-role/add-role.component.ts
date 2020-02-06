@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgDragDropModule } from 'ng-drag-drop';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import { FirestoreService } from '../services/firestore.service';
+import { User } from '../model/User.class';
+import { TestBed } from '@angular/core/testing';
 
 @Component({
   selector: 'app-add-role',
@@ -10,9 +13,29 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag
 })
 export class AddRoleComponent implements OnInit {
 
-  constructor() { }
+  item: any[];
+  none : none[] = [];
+
+  constructor(private FS : FirestoreService) { 
+    this.getData();
+  }
 
   ngOnInit() {
+    console.log(this.item)
+  }
+  async getData(){
+    const data = (await this.FS.getCollectionData()).subscribe(items => this.test(items));
+  }
+
+  test(items){
+    console.log(items)
+    if(items[1]["role"] == "none"){
+      this.none.push({
+        role: items[1]["role"],
+        name: items[1]["name"]
+      })
+    }
+    console.log(this.none)
   }
 
   todos = [
@@ -84,4 +107,9 @@ export class AddRoleComponent implements OnInit {
     }
   }
 
+}
+
+export interface none{
+  role : string;
+  name: string;
 }
