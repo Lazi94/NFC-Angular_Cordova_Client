@@ -4,15 +4,15 @@
       <div class="todo-container column-container">
         <div class="list"
              cdkDropList
-             #todoList="cdkDropList"
-             [cdkDropListData]="todos"
-             [cdkDropListConnectedTo]="[doneList, asdList]"
+             #writerList="cdkDropList"
+             [cdkDropListData]="writer"
+             [cdkDropListConnectedTo]="[ReaderList, adminList]"
              (cdkDropListDropped)="onDrop($event)">
-          <h2>Tech to learn</h2>
-          <mat-card *ngFor="let todo of todos" cdkDrag>
+          <h2>Író és olvasó jogosultság</h2>
+          <mat-card *ngFor="let item of writer" cdkDrag>
             <mat-card-header>
-              <mat-card-title>{{todo.name}}</mat-card-title>
-              <mat-card-subtitle>{{todo.category}}</mat-card-subtitle>
+              <mat-card-title>{{item.name}}</mat-card-title>
+              <!--<mat-card-subtitle>{{todo.category}}</mat-card-subtitle>-->
             </mat-card-header>
           </mat-card>
         </div>
@@ -21,15 +21,15 @@
       <div class="done-container column-container">
         <div class="list"
              cdkDropList
-             #doneList="cdkDropList"
-             [cdkDropListData]="completed"
-             [cdkDropListConnectedTo]="[todoList, asdList]"
+             #ReaderList="cdkDropList"
+             [cdkDropListData]="reader"
+             [cdkDropListConnectedTo]="[writerList, adminList, unassignedList]"
              (cdkDropListDropped)="onDrop($event)">
-          <h2>Tech learned</h2>
-          <mat-card *ngFor="let complete of completed" cdkDrag>
+          <h2>Olvasás jogosultság</h2>
+          <mat-card *ngFor="let item of reader" cdkDrag>
             <mat-card-header>
-              <mat-card-title>{{complete.name}}</mat-card-title>
-              <mat-card-subtitle>{{complete.category}}</mat-card-subtitle>
+              <mat-card-title>{{item.name}}</mat-card-title>
+              <!--<mat-card-subtitle>{{item.category}}</mat-card-subtitle>-->
             </mat-card-header>
           </mat-card>
         </div>
@@ -38,15 +38,32 @@
       <div class="done-container column-container">
         <div class="list"
              cdkDropList
-             #asdList="cdkDropList"
-             [cdkDropListData]="asd"
-             [cdkDropListConnectedTo]="[todoList, doneList]"
+             #adminList="cdkDropList"
+             [cdkDropListData]="admin"
+             [cdkDropListConnectedTo]="[writerList, ReaderList, unassignedList]"
              (cdkDropListDropped)="onDrop($event)">
-          <h2>Tech learned</h2>
-          <mat-card *ngFor="let ad of asd" cdkDrag>
+          <h2>Admin jogosultság</h2>
+          <mat-card *ngFor="let ad of admin" cdkDrag>
             <mat-card-header>
               <mat-card-title>{{ad.name}}</mat-card-title>
-              <mat-card-subtitle>{{ad.category}}</mat-card-subtitle>
+              <!--<mat-card-subtitle>{{ad.category}}</mat-card-subtitle>-->
+            </mat-card-header>
+          </mat-card>
+        </div>
+      </div>
+
+      <div class="done-container column-container">
+        <div class="list"
+             cdkDropList
+             #unassignedList="cdkDropList"
+             [cdkDropListData]="none"
+             [cdkDropListConnectedTo]="[writerList, ReaderList, adminList]"
+             (cdkDropListDropped)="onDrop($event)">
+          <h2>Nincs jogosultsága</h2>
+          <mat-card *ngFor="let item of none" cdkDrag>
+            <mat-card-header>
+              <mat-card-title>{{item.name}}</mat-card-title>
+              <!--<mat-card-subtitle>{{item.role}}</mat-card-subtitle>-->
             </mat-card-header>
           </mat-card>
         </div>

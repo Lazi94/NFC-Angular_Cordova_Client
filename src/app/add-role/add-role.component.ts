@@ -14,28 +14,56 @@ import { TestBed } from '@angular/core/testing';
 export class AddRoleComponent implements OnInit {
 
   item: any[];
-  none : none[] = [];
+  none : UserRole[] = [];
+  admin : UserRole[] = [];
+  reader : UserRole[] = [];
+  writer : UserRole[] = [];
 
   constructor(private FS : FirestoreService) { 
     this.getData();
   }
 
   ngOnInit() {
-    console.log(this.item)
   }
   async getData(){
-    const data = (await this.FS.getCollectionData()).subscribe(items => this.test(items));
+    const data = (await this.FS.getCollectionData()).subscribe(items => this.assign(items));
   }
 
-  test(items){
-    console.log(items)
-    if(items[1]["role"] == "none"){
-      this.none.push({
-        role: items[1]["role"],
-        name: items[1]["name"]
-      })
+  assign(items){
+    for(var i = 0; i < items.length; i++){
+
+    if(items[i]["role"] != null && items[i]["name"] != null){
+
+      if(items[i]["role"] == "none"){
+        this.none.push({
+          role: items[i]["role"],
+          name: items[i]["name"]
+        })
+      }
+
+      if(items[i]["role"] == "admin"){
+        this.admin.push({
+          role: items[i]["role"],
+          name: items[i]["name"]
+        })
+      }
+
+      if(items[i]["role"] == "reader"){
+        this.reader.push({
+          role: items[i]["role"],
+          name: items[i]["name"]
+        })
+      }
+
+      if(items[i]["role"] == "writer"){
+        this.writer.push({
+          role: items[i]["role"],
+          name: items[i]["name"]
+        })
+      }
+
     }
-    console.log(this.none)
+  }
   }
 
   todos = [
@@ -109,7 +137,10 @@ export class AddRoleComponent implements OnInit {
 
 }
 
-export interface none{
+export interface UserRole{
   role : string;
   name: string;
 }
+
+
+
