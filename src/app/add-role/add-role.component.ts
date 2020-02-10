@@ -66,65 +66,9 @@ export class AddRoleComponent implements OnInit {
   }
   }
 
-  todos = [
-    {
-      name: 'Angular',
-      category: 'Web Development'
-    },
-    {
-      name: 'Flexbox',
-      category: 'Web Development'
-    },
-    {
-      name: 'iOS',
-      category: 'App Development'
-    },
-    {
-      name: 'Java',
-      category: 'Software development'
-    }
-  ];
-
-  completed = [
-    {
-      name: 'Android',
-      category: 'Mobile Development'
-    },
-    {
-      name: 'MongoDB',
-      category: 'Databases'
-    },
-    {
-      name: 'ARKit',
-      category: 'Augmented Reality'
-    },
-    {
-      name: 'React',
-      category: 'Web Development'
-    }
-  ];
-
-  asd = [
-    {
-      name: 'Android',
-      category: 'Mobile Development'
-    },
-    {
-      name: 'MongoDB',
-      category: 'Databases'
-    },
-    {
-      name: 'ARKit',
-      category: 'Augmented Reality'
-    },
-    {
-      name: 'React',
-      category: 'Web Development'
-    }
-  ];
-
   onDrop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
+      console.log(event.container.data)
       moveItemInArray(event.container.data,
         event.previousIndex,
         event.currentIndex);
