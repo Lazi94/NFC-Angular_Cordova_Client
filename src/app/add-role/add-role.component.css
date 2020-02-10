@@ -10,3 +10,7 @@
 .mat-card {
     margin-bottom: 15px;
 }
+
+.cdk-drop-list{
+    min-height: 300px;
+}
