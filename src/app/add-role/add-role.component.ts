@@ -65,14 +65,35 @@ export class AddRoleComponent implements OnInit {
     }
   }
   }
+  updateData(id, data){
+    console.log(data.length)
+    console.log(id)
+    for(var i = 0; i = data.length; i++){
+      console.log(data[i])
+      if(id == "cdk-drop-list-0"){
+        this.FS.updateCollection(data[i]["name"], "writer");
+      } else if (id == "cdk-drop-list-1"){
+        this.FS.updateCollection(data[i]["name"], "reader");
+      } else if (id == "cdk-drop-list-2"){
+        this.FS.updateCollection(data[i]["name"], "admin");
+      } else if (id == "cdk-drop-list-3"){
+        this.FS.updateCollection(data[i]["name"], "none");
+      }
+    }
+  }
 
   onDrop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
-      console.log(event.container.data)
       moveItemInArray(event.container.data,
         event.previousIndex,
         event.currentIndex);
     } else {
+      for(var i=0; i <= event.container.data.length; i++){
+         // console.log(event.container.data[0]["name"])
+      }
+      console.log(event.container.data.length)
+     // this.updateData(event.container.id, event.container.data);
+ 
       transferArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex, event.currentIndex);
