@@ -32,29 +32,35 @@ export class FirestoreService {
   });
   }
 
-  updateCollection(name, role){
-    console.log(name)
-    console.log(role)
-    var UserCollection = this.AF.collection(this.collection).doc(name + this.email);
-
-      return UserCollection.update({
-          role: role
-      })
-      .then(function() {
-          console.log("Document successfully updated!");
-      })
-      .catch(function(error) {
-          console.error("Error updating document: ", error);
-      });
+  async updateCollection(name, role){
+    var user2  = new User;
+    
+    user2.email =  name + this.email;
+    const data = await this.getRole(user2);
+    console.log(data)
+    if(role == "kecske"){
+      var UserCollection = this.AF.collection(this.collection).doc(name + this.email);
+        return UserCollection.update({
+            role: role
+        })
+        .then(function() {
+            console.log("Document successfully updated!");
+        })
+        .catch(function(error) {
+            console.error("Error updating document: ", error);
+        });
+      }
   }
  
   async getCollectionData(){
-    const snapshot = await this.AF.collection('Users').valueChanges();
+    const snapshot = await this.AF.collection(this.collection).valueChanges();
     return snapshot;
   }
 
+ 
+
   async getRole(user: User){
-    const snapshot = await this.AF.collection('Users').doc(user.email).get()
+    const snapshot = await this.AF.collection(this.collection).doc(user.email).get()
     const documents = [];
     snapshot.forEach(doc => { 
        console.log(doc.data())

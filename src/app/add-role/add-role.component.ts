@@ -18,9 +18,11 @@ export class AddRoleComponent implements OnInit {
   admin : UserRole[] = [];
   reader : UserRole[] = [];
   writer : UserRole[] = [];
+  isSet : boolean; 
 
   constructor(private FS : FirestoreService) { 
     this.getData();
+    this.isSet = false;
   }
 
   ngOnInit() {
@@ -30,54 +32,102 @@ export class AddRoleComponent implements OnInit {
   }
 
   assign(items){
-    for(var i = 0; i < items.length; i++){
+    if(this.isSet == false){
+        for(var i = 0; i < items.length; i++){
 
-    if(items[i]["role"] != null && items[i]["name"] != null){
+        if(items[i]["role"] != null && items[i]["name"] != null){
 
-      if(items[i]["role"] == "none"){
-        this.none.push({
-          role: items[i]["role"],
-          name: items[i]["name"]
-        })
+          if(items[i]["role"] == "none"){
+              this.none.push({
+                role: items[i]["role"],
+                name: items[i]["name"]
+              })
+          }
+
+          if(items[i]["role"] == "admin"){
+            this.admin.push({
+              role: items[i]["role"],
+              name: items[i]["name"]
+            })
+          }
+
+          if(items[i]["role"] == "reader"){
+            this.reader.push({
+              role: items[i]["role"],
+              name: items[i]["name"]
+            })
+          }
+
+          if(items[i]["role"] == "writer"){
+            this.writer.push({
+              role: items[i]["role"],
+              name: items[i]["name"]
+            })
+          }
+
+        }
       }
 
-      if(items[i]["role"] == "admin"){
-        this.admin.push({
-          role: items[i]["role"],
-          name: items[i]["name"]
-        })
-      }
-
-      if(items[i]["role"] == "reader"){
-        this.reader.push({
-          role: items[i]["role"],
-          name: items[i]["name"]
-        })
-      }
-
-      if(items[i]["role"] == "writer"){
-        this.writer.push({
-          role: items[i]["role"],
-          name: items[i]["name"]
-        })
-      }
-
+      this.isSet = true;
     }
   }
-  }
   updateData(id, data){
-    console.log(data.length)
-    console.log(id)
-    for(var i = 0; i = data.length; i++){
-      console.log(data[i])
-      if(id == "cdk-drop-list-0"){
+    for(var i = 0; i < data.length; i++){
+      if(id == "cdk-drop-list-0" && data[i]["role"] != "writer"){
+
+        this.updateInterface("writer", data[i][name]);
         this.FS.updateCollection(data[i]["name"], "writer");
-      } else if (id == "cdk-drop-list-1"){
+
+      } else if (id == "cdk-drop-list-1" && data[i]["role"] != "reader"){
+        
+        this.updateInterface("reader", data[i][name]);
         this.FS.updateCollection(data[i]["name"], "reader");
-      } else if (id == "cdk-drop-list-2"){
+
+      } else if (id == "cdk-drop-list-2" && data[i]["role"] != "admin"){
+
+        this.updateInterface("admin", data[i][name]);
         this.FS.updateCollection(data[i]["name"], "admin");
-      } else if (id == "cdk-drop-list-3"){
+
+      } else if (id == "cdk-drop-list-3" && data[i]["role"] != "none"){
+
+        this.updateInterface("none", data[i][name]);
         this.FS.updateCollection(data[i]["name"], "none");
+
+      }
+    }
+  }
+
+  updateInterface(role, name){
+
+    if(role == "none"){
+      for(var i=0; i < this.none.length; i++){
+        if(this.none[i]["name"] == name){
+            this.none[i][role] = role
+        }
+      }
+    }
+
+    if(role == "admin"){
+      for(var i=0; i < this.none.length; i++){
+        if(this.none[i]["name"] == name){
+            this.none[i][role] = role
+        }
+      }
+    }
+
+    if(role == "writer"){
+      for(var i=0; i < this.none.length; i++){
+        if(this.none[i]["name"] == name){
+            this.none[i][role] = role
+        }
+      }
+    }
+
+    if(role == "reader"){
+      for(var i=0; i < this.none.length; i++){
+        if(this.none[i]["name"] == name){
+            this.none[i][role] = role
+        }
       }
     }
   }
@@ -88,15 +138,12 @@ export class AddRoleComponent implements OnInit {
         event.previousIndex,
         event.currentIndex);
     } else {
-      for(var i=0; i <= event.container.data.length; i++){
-         // console.log(event.container.data[0]["name"])
-      }
-      console.log(event.container.data.length)
-     // this.updateData(event.container.id, event.container.data);
- 
+    
       transferArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex, event.currentIndex);
+
+        this.updateData(event.container.id, event.container.data);
     }
   }
 

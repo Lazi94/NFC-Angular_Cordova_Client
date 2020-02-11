@@ -16,9 +16,7 @@ export class UsersComponent implements OnInit {
   }
 
   change(value){
-      console.log(value)
       this.Selector = value;
-      console.log(this.Selector)
   }
 
 }
