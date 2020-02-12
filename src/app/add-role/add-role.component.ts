@@ -18,21 +18,23 @@ export class AddRoleComponent implements OnInit {
   admin : UserRole[] = [];
   reader : UserRole[] = [];
   writer : UserRole[] = [];
-  isSet : boolean; 
+  isSet : boolean = false; 
 
   constructor(private FS : FirestoreService) { 
-    this.getData();
-    this.isSet = false;
+   
   }
 
   ngOnInit() {
+    console.log(this.isSet)
+    this.getData();
+    //this.isSet = false;
   }
   async getData(){
     const data = (await this.FS.getCollectionData()).subscribe(items => this.assign(items));
   }
 
   assign(items){
-    if(this.isSet == false){
+    //if(this.isSet == false){
         for(var i = 0; i < items.length; i++){
 
         if(items[i]["role"] != null && items[i]["name"] != null){
@@ -66,29 +68,30 @@ export class AddRoleComponent implements OnInit {
           }
 
         }
-      }
+      //}
 
       this.isSet = true;
     }
   }
   updateData(id, data){
     for(var i = 0; i < data.length; i++){
-      if(id == "cdk-drop-list-0" && data[i]["role"] != "writer"){
+
+      if(id == "cdk-drop-list-0"){
 
         this.updateInterface("writer", data[i][name]);
         this.FS.updateCollection(data[i]["name"], "writer");
 
-      } else if (id == "cdk-drop-list-1" && data[i]["role"] != "reader"){
+      } else if (id == "cdk-drop-list-1"){
         
         this.updateInterface("reader", data[i][name]);
         this.FS.updateCollection(data[i]["name"], "reader");
 
-      } else if (id == "cdk-drop-list-2" && data[i]["role"] != "admin"){
+      } else if (id == "cdk-drop-list-2"){
 
         this.updateInterface("admin", data[i][name]);
         this.FS.updateCollection(data[i]["name"], "admin");
 
-      } else if (id == "cdk-drop-list-3" && data[i]["role"] != "none"){
+      } else if (id == "cdk-drop-list-3"){
 
         this.updateInterface("none", data[i][name]);
         this.FS.updateCollection(data[i]["name"], "none");
@@ -108,9 +111,9 @@ export class AddRoleComponent implements OnInit {
     }
 
     if(role == "admin"){
-      for(var i=0; i < this.none.length; i++){
-        if(this.none[i]["name"] == name){
-            this.none[i][role] = role
+      for(var i=0; i < this.admin.length; i++){
+        if(this.admin[i]["name"] == name){
+            this.admin[i][role] = role
         }
       }
     }
@@ -133,6 +136,7 @@ export class AddRoleComponent implements OnInit {
   }
 
   onDrop(event: CdkDragDrop<string[]>) {
+    
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data,
         event.previousIndex,
@@ -142,7 +146,6 @@ export class AddRoleComponent implements OnInit {
       transferArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex, event.currentIndex);
-
         this.updateData(event.container.id, event.container.data);
     }
   }

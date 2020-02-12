@@ -33,13 +33,19 @@ export class FirestoreService {
   }
 
   async updateCollection(name, role){
-    var user2  = new User;
     
-    user2.email =  name + this.email;
-    const data = await this.getRole(user2);
-    console.log(data)
-    if(role == "kecske"){
-      var UserCollection = this.AF.collection(this.collection).doc(name + this.email);
+    const snapshot = await this.AF.collection(this.collection).doc(name + this.email).get()
+    const documents = [];
+    var data = snapshot.forEach(doc => { 
+        this.Update(doc.data(),role);
+    });
+    
+  }
+
+  async Update(data, role){
+    console.log(data["role"] + " " + role)
+    if(data["role"] != role){
+      var UserCollection = this.AF.collection(this.collection).doc(data["name"] + this.email);
         return UserCollection.update({
             role: role
         })
@@ -50,6 +56,7 @@ export class FirestoreService {
             console.error("Error updating document: ", error);
         });
       }
+
   }
  
   async getCollectionData(){
@@ -57,13 +64,14 @@ export class FirestoreService {
     return snapshot;
   }
 
- 
 
   async getRole(user: User){
+
     const snapshot = await this.AF.collection(this.collection).doc(user.email).get()
     const documents = [];
     snapshot.forEach(doc => { 
-       console.log(doc.data())
+      console.log(doc.data())
+      return doc.data()
     });
     return documents;
 }
