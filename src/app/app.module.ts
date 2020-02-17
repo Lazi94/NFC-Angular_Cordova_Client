@@ -22,11 +22,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgDragDropModule } from 'ng-drag-drop';
 import { AddDataComponent } from './add-data/add-data.component';
 import { MapComponent } from './map/map.component';
-import { AddUserComponent } from './add-user/add-user.component';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AddRoleComponent } from './add-role/add-role.component';
-import { UsersComponent } from './users/users.component';
 
 @NgModule({
   declarations: [
@@ -35,9 +33,7 @@ import { UsersComponent } from './users/users.component';
     MapComponent,
     LoginComponent,
     AddDataComponent,
-    AddUserComponent,
     AddRoleComponent,
-    UsersComponent,
   ],
   imports: [
     FormsModule,

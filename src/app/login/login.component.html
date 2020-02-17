@@ -11,6 +11,21 @@
       <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" [(ngModel)]="user.password" [ngModelOptions]="{standalone: true}">
     </div>
     <button type="submit" class="btn btn-primary" (click)="onLogin()">Submit</button>
+    <div style="padding-top: 15px;">
+      <ngb-alert  *ngIf="fail" [type]="'danger'" (close)="fail = false" [dismissible]="true">
+        <strong>A bejelentkezés sikertelen (Ellenőrizd a következőket):</strong> 
+          <ul><li>
+            Helyesen írtad be a felhasználónevet és a jelszót!
+          </li>
+          <li>
+            Az email cím domain neve (<i>@tranzorg.hu</i>) nem került a felhasználónév mögé!
+          </li>
+          <li>
+            A felhasználó megfelelő jogosultságokkal rendelkezik!
+          </li>
+        </ul>
+      </ngb-alert>
+    </div>
   </form>
   </div>
 </div>  

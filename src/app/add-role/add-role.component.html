@@ -9,7 +9,7 @@
              [cdkDropListConnectedTo]="[ReaderList, adminList]"
              (cdkDropListDropped)="onDrop($event)">
           <h2>Író és olvasó jogosultság</h2>
-          <mat-card *ngFor="let item of writer" cdkDrag>
+          <mat-card *ngFor="let item of writer" cdkDrag [cdkDragDisabled]="item.draggable">
             <mat-card-header>
               <mat-card-title>{{item.name}}</mat-card-title>
               <!--<mat-card-subtitle>{{todo.category}}</mat-card-subtitle>-->
@@ -26,7 +26,7 @@
              [cdkDropListConnectedTo]="[writerList, adminList, unassignedList]"
              (cdkDropListDropped)="onDrop($event)">
           <h2>Olvasás jogosultság</h2>
-          <mat-card *ngFor="let item of reader" cdkDrag>
+          <mat-card *ngFor="let item of reader" cdkDrag [cdkDragDisabled]="item.draggable">
             <mat-card-header>
               <mat-card-title>{{item.name}}</mat-card-title>
               <!--<mat-card-subtitle>{{item.category}}</mat-card-subtitle>-->
@@ -43,7 +43,7 @@
              [cdkDropListConnectedTo]="[writerList, ReaderList, unassignedList]"
              (cdkDropListDropped)="onDrop($event)">
           <h2>Admin jogosultság</h2>
-          <mat-card *ngFor="let ad of admin" cdkDrag>
+          <mat-card *ngFor="let ad of admin" cdkDrag [cdkDragDisabled]="ad.draggable">
             <mat-card-header>
               <mat-card-title>{{ad.name}}</mat-card-title>
               <!--<mat-card-subtitle>{{ad.category}}</mat-card-subtitle>-->
@@ -60,7 +60,7 @@
              [cdkDropListConnectedTo]="[writerList, ReaderList, adminList]"
              (cdkDropListDropped)="onDrop($event)">
           <h2>Nincs jogosultsága</h2>
-          <mat-card *ngFor="let item of none" cdkDrag>
+          <mat-card *ngFor="let item of none" cdkDrag [cdkDragDisabled]="item.draggable">
             <mat-card-header>
               <mat-card-title>{{item.name}}</mat-card-title>
               <!--<mat-card-subtitle>{{item.role}}</mat-card-subtitle>-->
@@ -71,4 +71,41 @@
   
     </div>
   </div>
+  
+
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <label for="email">Felhasználó email címe</label>
+          <div class="input-group">         
+            <input type="text" class="form-control" id="email"  placeholder="@tranzorg.hu" [(ngModel)]="user.email" [ngModelOptions]="{standalone: true}"> 
+          </div>
+          <label for="password">Felhasználó email címe</label>
+          <div class="input-group">         
+            <input type="password" class="form-control" id="password"  placeholder="@tranzorg.hu" [(ngModel)]="user.password" [ngModelOptions]="{standalone: true}">  
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="test()">Save</button>
+      <ngb-alert  *ngIf="success" [type]="'primary'" (close)="success = false" [dismissible]="true">
+        <strong>Felhasználó sikeresen hozzáadva!</strong> 
+      </ngb-alert>
+      <ngb-alert  *ngIf="fail" [type]="'danger'" (close)="fail = true" [dismissible]="true">
+        <strong>A felhasználó már létezik vagy nem megfelelő az email formátuma vagy legalább 6 karakter hosszúságúnak kell lennie!</strong> 
+      </ngb-alert>
+    </div>
+  </ng-template>
+  
+  <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Új felhasználó hozzáadása</button>
+  
+  <hr>
   

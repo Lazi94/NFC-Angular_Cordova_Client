@@ -10,7 +10,7 @@ import { FirestoreService } from '../services/firestore.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+  fail: Boolean = false;
   user: User = new User;
   constructor(private authSvc: AuthService, private router: Router, private FS : FirestoreService) { }
 
@@ -18,12 +18,23 @@ export class LoginComponent implements OnInit {
   
   }
 
+
+
+  async getIslogged(){
+    return await this.authSvc.isLogged
+  }
+
   async onLogin(){
-    const user = await this.authSvc.onLogin(this.user);
-    const UserData = await this.FS.getRole(this.user);
-    console.log(UserData);
-    if(user){
+    this.user.email = this.user.email + "@tranzorg.hu";
+    await this.authSvc.onLogin(this.user);
+    const logged = this.getIslogged()
+
+    console.log(logged);
+
+    if(this.authSvc.isLogged){
       this.router.navigateByUrl('/');
+    } else {
+      this.fail = true;
     }
   }
 

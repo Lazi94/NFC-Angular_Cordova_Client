@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { User } from '../model/User.class';
-import { map } from 'rxjs/operators';
+import { map, flatMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,7 @@ export class FirestoreService {
   email: string = "@tranzorg.hu"
   public ideasCollection: AngularFirestoreCollection<User>;
   public ideas: Observable<any[]>;
+
 
   constructor(private AF: AngularFirestore) { 
   }
@@ -42,8 +43,9 @@ export class FirestoreService {
     
   }
 
+
+
   async Update(data, role){
-    console.log(data["role"] + " " + role)
     if(data["role"] != role){
       var UserCollection = this.AF.collection(this.collection).doc(data["name"] + this.email);
         return UserCollection.update({
@@ -64,15 +66,24 @@ export class FirestoreService {
     return snapshot;
   }
 
-
-  async getRole(user: User){
-
+  async Role(user : User){
     const snapshot = await this.AF.collection(this.collection).doc(user.email).get()
     const documents = [];
-    snapshot.forEach(doc => { 
-      console.log(doc.data())
-      return doc.data()
+    var data = snapshot.forEach(doc => { 
+        console.log(doc.data())
     });
-    return documents;
-}
+  }
+
+
+    async getRole(user : User) {
+        return this.AF.collection(this.collection).doc(user.email)
+          .snapshotChanges()
+          .pipe(
+            map(actions => {
+              const data = actions.payload.data() as any;
+              const uid = actions.payload.id;
+              return { uid, ...data};
+            })
+          );
+  }
 }
